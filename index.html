@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Blank Template</title>
+
+    <link rel="stylesheet" href="CSS/main.css">
+
+</head>
+
+<body>
+       <div class="HomePage">
+        <div class="Banner"> 
+        <h3 class="HomeStyle">Single Elimination</h3> </div>
+        <Button class="SelectionZone" id="ParticipantList">Signups</Button>
+        <Button class="SelectionZone typeShift">Dbl-Elim</Button>
+        <Button class="SelectionZone Seeded" id="SeededTourney">Seeded</Button>
+        <Button class="SelectionZone Unseeded" id="SeededTourney">UnSeeded</Button>
+        <Button class="SelectionZone WLS" id="SeededTourney">WLS</Button>
+    </div>
+ 
+ <div class="DarkZone">
+   <div id="PersonSearch">
+    <input type="text" id="inputField" />
+       <div id="People">    
+    </div>
+    </div>
+    </div>
+    
+<div class="ParticipantList">
+        <div class="Banner"> 
+        <button id="HomePage">  &lt; Back</button>
+        <h3>Participants</h3> 
+        <button id="DarkZone"> +</button></div>
+        
+        <div class="SignedUpPlayers">
+            
+        </div>
+        <div class="BottomBanner">
+            <p class="RosterDelete">Remove Player</p>
+        </div>
+    </div>
+      
+<div class="SeededTourney">
+        <div class="Banner"> 
+        <button id="HomePage">  &lt; Back</button>
+        <h3>SeededTourney</h3> 
+        <button class="NextRound"> Round+</button></div>
+        
+        <div class="BracketPlace"></div>
+        
+        <div class="BottomBanner FightBanner hidden"> <div class="FightZone"></div> <Button class="fighter1">Right</Button>
+            <Button class="fighter0">Left</Button>
+        </div>
+        <div class="BottomBanner WLSBanner hidden">
+            <p>Duration (in minutes): <input class="TimeDelay" type="number" placeholder="15"> <Button class="StartTimer">Start</Button></p> 
+            <p class="Time">15:00</p>
+        </div>
+    </div>
+      
+      
+<div class="PagePrototype">
+        <div class="Banner"> 
+        <button id="HomePage">  &lt; Back</button>
+        <h3>Participants</h3> 
+        <button class="Add"> +</button></div>
+    </div>
+   
+    <script src="JS/KensCode/lib/jquery.min.js"></script>
+    <script src="JS/KensCode/jsork-min.js"></script>
+    <script src="JS/KensCode/lib/moment.js"></script>
+    <script src="JS/Functions/TourneyStyles.js"></script>
+    <script src="JS/Functions/NameFiles.js"></script>
+    <script src="JS/Main.js"></script>
+</body>
+  
+</html>
+
+

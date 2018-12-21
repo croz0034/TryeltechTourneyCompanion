@@ -1,0 +1,136 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    overflow: hidden;
+}
+
+
+/*//////////////////// Player Registration */
+.DarkZone {
+    position: absolute;
+    background: black;
+    opacity: 0.8;
+    min-height: 100%;
+    min-width: 100%
+}
+#PersonSearch{
+    display: inherit;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    max-height: 90%;
+    width: 90%;
+    background: white;
+}
+#inputField{
+    position: relative;
+    width: 100%;
+    min-height: 3rem
+}
+#People{
+    position: relative;
+    max-height: 40rem;
+    overflow: scroll
+}
+#People > li {
+    border: 1px solid black;
+    height: 2rem;
+    list-style-type: none;
+    text-align: center;
+}
+.active{
+    background: lightblue;
+}
+/*//////////////////// Universal*/
+.hidden{
+    display: none;
+}
+.Banner{
+    position: relative;
+    background: rgb(66, 134, 244);
+    border-bottom: outset blue 2px;
+    min-height: 2.5rem;
+    padding: 0.5rem;
+    color: white;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.Banner > h3 {
+    display: inline;
+}
+.Banner > Button {
+    background: rgb(66, 134, 244);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+}
+#HomePage{
+    position: absolute;
+    left: 15px;
+    text-align: left;
+}
+#DarkZone, .NextRound{
+    position: absolute;
+    right: 15px;
+    text-align: right;
+    
+}
+.BottomBanner{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-top: blue outset 2px;
+}
+.fighter0 {
+    position:relative;
+    float: left;
+    font-size: 2rem;
+    padding-right: 15px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.fighter1 {
+    position:relative;
+    float: right;
+    font-size: 2rem;
+    padding-left: 15px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.FightZone{
+    margin: 0;
+padding-top:0.75rem;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+}
+/*////////////////////HomePage*/
+
+.SelectionZone{
+    width: 49%;
+    display: inline;
+    padding: 10%;
+    height: auto;
+    background: blue;
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+/*////////////////// WLS */
+.WLB{
+margin: 15px;
+    margin-bottom: 0;
+display : relative;
+float : left;
+padding-top : 20px;
+text-align : center;
+width : 60px;
+height : 60px;
+color : white;
+background : blue;
+border-radius : 30px;
+border: outset lightblue 2px;}
