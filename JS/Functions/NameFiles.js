@@ -12,10 +12,13 @@ let NameFiles = {
         let c = NameFiles
 
         if (localStorage.getItem("PlayerList")) {
+            
             NameFiles.People = JSON.parse(localStorage.getItem("PlayerList"));
+console.log(localStorage.getItem("PlayerList"))
 
-
-            Object.keys(NameFiles.People).forEach((person) => {
+            let PlayerList = JSON.parse(localStorage.getItem("PlayerList"))
+            Object.keys(PlayerList).forEach((person) => {
+                console.log(person)
                 let additions = document.createElement("li")
                 additions.textContent = person;
                 additions.id = person
@@ -23,7 +26,6 @@ let NameFiles = {
                 document.getElementById("People").appendChild(additions);
                 NameFiles.ElementRoster.push(additions);
 
-                localStorage.setItem("PlayerList", JSON.stringify(NameFiles.People))
             })
         } else {
             c.ParkListings(c.Home)
@@ -57,9 +59,10 @@ let NameFiles = {
         })
     },
     BuildRoster: () => {
-        console.log(NameFiles.People)
 
         setTimeout(() => {
+            let SaveList = {};
+                document.getElementById("People").innerHTML = "";
             Object.keys(NameFiles.People).forEach((person) => {
                 let additions = document.createElement("li")
                 additions.textContent = person;
@@ -67,10 +70,11 @@ let NameFiles = {
                 additions.addEventListener("click", NameFiles.PersonSelect)
                 document.getElementById("People").appendChild(additions);
                 NameFiles.ElementRoster.push(additions);
-                localStorage.setItem("PlayerList", JSON.stringify(NameFiles.People))
-            })
+                SaveList[person] = NameFiles.People[person]
+            });
+            console.log(JSON.stringify(SaveList))
+                localStorage.setItem("PlayerList", JSON.stringify(SaveList))
         }, 2000)
-        console.log(NameFiles.Parks)
     },
     RosterFilter: (ev) => {
         console.log(ev.keyCode)
@@ -150,7 +154,6 @@ let NameFiles = {
         Unsorted = Unsorted.sort((a, b) => {
             return b.orders - a.orders
         })
-        console.log(Unsorted)
 
     },
     ReturnToList: () => {

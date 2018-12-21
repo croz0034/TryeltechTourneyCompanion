@@ -1,4 +1,14 @@
 let Tourney = {
+    init: ()=>{
+        
+        document.querySelector(".StartTimer").addEventListener("click", Tourney.Timer);
+        document.querySelector(".fighter0").addEventListener("click", Tourney.WinButton);
+        document.querySelector(".fighter1").addEventListener("click", Tourney.WinButton);
+        document.querySelector(".NextRound").addEventListener("click", Tourney.NextRound);
+        document.querySelectorAll('#SeededTourney').forEach((item) => {
+            item.addEventListener("click", Tourney.Handler)
+        });
+    },
     ///////////////////
     Prelim: false,
     PrelimElim: [],

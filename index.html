@@ -18,10 +18,10 @@
         <div class="Banner"> 
         <h3 class="HomeStyle">Single Elimination</h3> </div>
         <Button class="SelectionZone" id="ParticipantList">Signups</Button>
-        <Button class="SelectionZone typeShift">Dbl-Elim</Button>
         <Button class="SelectionZone Seeded" id="SeededTourney">Seeded</Button>
         <Button class="SelectionZone Unseeded" id="SeededTourney">UnSeeded</Button>
         <Button class="SelectionZone WLS" id="SeededTourney">WLS</Button>
+        <Button class="SelectionZone" id="Options">Options</Button>
     </div>
  
  <div class="DarkZone">
@@ -64,17 +64,30 @@
     </div>
       
       
-<div class="PagePrototype">
+<div class="Options">
         <div class="Banner"> 
         <button id="HomePage">  &lt; Back</button>
-        <h3>Participants</h3> 
-        <button class="Add"> +</button></div>
+        <h3>Options</h3></div>
+        <div> 
+        <button id="TwilightZone">Pick a Kingdom</button></div>
+        <Button class="typeShift">Dbl-Elim</Button>
+        <p><input type="text" class="TourneyStyleInput"><button class="AddStyle">add</button></p>
+        <ol id="TourneyStyles"></ol>
+    </div>
+    
+<div class="TwilightZone">
+   <div id="ParkSearch">
+    <input type="text" id="ParkInput" />
+       <div id="Parks">    
+    </div>
+    </div>
     </div>
    
     <script src="JS/KensCode/lib/jquery.min.js"></script>
     <script src="JS/KensCode/jsork-min.js"></script>
     <script src="JS/KensCode/lib/moment.js"></script>
     <script src="JS/Functions/TourneyStyles.js"></script>
+    <script src="JS/Functions/Options.js"></script>
     <script src="JS/Functions/NameFiles.js"></script>
     <script src="JS/Main.js"></script>
 </body>

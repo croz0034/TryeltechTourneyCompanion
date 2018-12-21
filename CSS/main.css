@@ -6,14 +6,14 @@
 
 
 /*//////////////////// Player Registration */
-.DarkZone {
+.DarkZone, .TwilightZone {
     position: absolute;
     background: black;
     opacity: 0.8;
     min-height: 100%;
     min-width: 100%
 }
-#PersonSearch{
+#PersonSearch, #ParkSearch{
     display: inherit;
     position: absolute;
     top: 5%;
@@ -27,12 +27,12 @@
     width: 100%;
     min-height: 3rem
 }
-#People{
+#People, #Parks{
     position: relative;
     max-height: 40rem;
     overflow: scroll
 }
-#People > li {
+#People > li, Parks > li {
     border: 1px solid black;
     height: 2rem;
     list-style-type: none;
