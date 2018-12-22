@@ -32,7 +32,10 @@ additions);
             additions.id = style;
             document.querySelector(".BracketPlace").appendChild(additions)
         })
-        document.querySelector(".SeededTourney").querySelector('h3').textContent = ev.target.classList[1] + " Tourney";
+        let additions = document.createElement("button");
+        additions.textContent = "Switch";
+        additions.addEventListener("click", Tourney.BottomBannerToggle)
+       document.querySelector(".TourneyStyleTabs").appendChild(additions); document.querySelector(".SeededTourney").querySelector('h3').textContent = ev.target.classList[1] + " Tourney";
 
         if (ev.target.classList[1] == "WLS") {
             document.querySelector(".FightBanner").classList.add("hidden");
@@ -62,20 +65,13 @@ additions);
         
 
     },
-    Unseeded: () => {
-        
-        
-        
-        let x = 0;
+    Unseeded: () => {  let x = 0;
         console.log("Go!")
             Options.FightingStyles.forEach((styleListed)=>{
         NameFiles.Participants.sort(function (a, b) {
             return 0.5 - Math.random()
         }).slice(0)    
         NameFiles.Participants.forEach((Contestant) => {
-                console.log(Contestant[styleListed])
-                console.log(styleListed)
-                console.log(Contestant)
             Contestant.PlayerNumber = x;
             x++;
                 if(Contestant[styleListed]){
@@ -88,7 +84,16 @@ additions);
     },
     WLS: () => {
         let total = NameFiles.Participants.length
-        let stage = document.querySelector(".SeededTourney").querySelector('.BracketPlace').querySelector(`#${Tourney.ActiveStyle.id}`);
+      
+        
+        
+        
+        
+        let x = 0;
+        console.log("Go!")
+            Options.FightingStyles.forEach((styleListed)=>{
+     
+                  let stage = document.querySelector(".SeededTourney").querySelector('.BracketPlace').querySelector(`#${styleListed}`);
         let additions;
         let x = 0;
         for (i = 0; i < total; i++) {
@@ -99,11 +104,18 @@ additions);
             additions.addEventListener('click', Tourney.IronManPoint)
             stage.appendChild(additions);
         }
+                
+            })
+        
     },
     //////////// Participants
     Winners: {},
     Eliminated:  {},
     /////////// WLS
+    BottomBannerToggle: (ev)=>{
+        document.querySelector(".WLSBanner").classList.toggle("hidden");
+            document.querySelector(".FightBanner").classList.toggle("hidden");  
+    },
     IronManPoint: (ev) => {
         console.log(ev.target.id)
         if (Tourney.Point[ev.target.id]) {
@@ -169,9 +181,8 @@ additions);
             console.log('RoundNow')
             document.querySelector('.BracketPlace').querySelector(`#${Tourney.ActiveStyle.id}`).innerHTML = "";
             NameFiles.SortByOrders(Tourney.Winners[Tourney.ActiveStyle.id]);
-            TourneyGetContestants(Tourney.Winners[Tourney.ActiveStyle.id]);
-            document.querySelector(".WLSBanner").classList.add("hidden");
-            document.querySelector(".FightBanner").classList.remove("hidden");
+            Tourney.GetContestants(Tourney.Winners[Tourney.ActiveStyle.id]);
+            document.querySelector(".WLSBanner").classList.add("hidden"); document.querySelector(".FightBanner").classList.remove("hidden");
             Tourney.Winners[Tourney.ActiveStyle.id] = [];
         }
     },
