@@ -14,11 +14,9 @@ let NameFiles = {
         if (localStorage.getItem("PlayerList")) {
             
             NameFiles.People = JSON.parse(localStorage.getItem("PlayerList"));
-console.log(localStorage.getItem("PlayerList"))
 
             let PlayerList = JSON.parse(localStorage.getItem("PlayerList"))
             Object.keys(PlayerList).forEach((person) => {
-                console.log(person)
                 let additions = document.createElement("li")
                 additions.textContent = person;
                 additions.id = person
@@ -137,10 +135,14 @@ console.log(localStorage.getItem("PlayerList"))
         console.log(NameFiles.Participants)
     },
     PersonHighlight: (ev)=>{
-        console.log("ping")
+        if(ev.target.nodeName == "INPUT"){
+            NameFiles.signup(ev)} else {
+            console.log(ev.target.nodeName)
         if(NameFiles.currentTarget){NameFiles.currentTarget.classList.remove("active")}
         ev.target.classList.add("active");
         NameFiles.currentTarget = ev.target;
+        }
+        
     },
     //////////////// PlayerRemove
     PersonRemove: (ev) =>{
@@ -170,6 +172,17 @@ console.log(localStorage.getItem("PlayerList"))
             additions.addEventListener('click', NameFiles.PersonHighlight);
             updateTarget.appendChild(additions)
             x ++;
+            
+            
+                //////////// Tourney Types
+                console.log(Options.FightingStyles)
+                Options.FightingStyles.forEach((Tstyle)=>{
+                let TourneyStyles = document.createElement("input");
+                    TourneyStyles.type = "checkbox";
+                    TourneyStyles.checked = person[Tstyle];
+                    TourneyStyles.id = Tstyle;
+                    additions.appendChild(TourneyStyles);
+                })
         })
         MasterCode.CurrentPage = document.querySelector(".ParticipantList");
         MasterCode.PageShift();
@@ -178,6 +191,13 @@ console.log(localStorage.getItem("PlayerList"))
         ev.preventDefault();
         ev.stopPropagation();
         console.log("ping")
+    },
+    signup: (ev) => {
+        console.log(ev.target.id);
+        console.log(ev.target.checked)
+        console.log(ev.target.parentElement.id)
+        console.log(NameFiles.Participants[ev.target.parentElement.id])
+        NameFiles.Participants[ev.target.parentElement.id][ev.target.id] = ev.target.checked
     }
 };
 

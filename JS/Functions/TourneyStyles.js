@@ -1,4 +1,5 @@
 let Tourney = {
+    ActiveStyle: "",
     init: ()=>{
         
         document.querySelector(".StartTimer").addEventListener("click", Tourney.Timer);
@@ -15,9 +16,23 @@ let Tourney = {
     DoubleElim: false,
     LoseBracket: false,
     Handler: (ev) => {
+        
+        document.querySelector(".TourneyStyleTabs").innerHTML = "";
+        document.querySelector(".BracketPlace").innerHTML = "";
+        Options.FightingStyles.forEach((style)=>{
+            Tourney.Winners[style] = [];
+            Tourney.Eliminated[style] = [];
+            let additions = document.createElement("button");
+            additions.textContent = style;
+            additions.id = style;
+            additions.addEventListener("click", Tourney.ChangeTab)
+            document.querySelector(".TourneyStyleTabs").appendChild(
+additions);
+            additions = document.createElement("div");
+            additions.id = style;
+            document.querySelector(".BracketPlace").appendChild(additions)
+        })
         document.querySelector(".SeededTourney").querySelector('h3').textContent = ev.target.classList[1] + " Tourney";
-        document.querySelector('.BracketPlace').innerHTML = "";
-        Tourney[ev.target.classList[1]]();
 
         if (ev.target.classList[1] == "WLS") {
             document.querySelector(".FightBanner").classList.add("hidden");
@@ -27,39 +42,55 @@ let Tourney = {
             document.querySelector(".FightBanner").classList.remove("hidden");
 
         }
+        Tourney[ev.target.classList[1]]()
     },
     ///////////////// Types: 
     Seeded: () => {
-        Tourney.Winners = NameFiles.Participants.slice(0);
         let x = 0;
-        Tourney.Winners.forEach((Contestant) => {
+        console.log("Go!")
+            Options.FightingStyles.forEach((styleListed)=>{
+                
+        NameFiles.Participants.forEach((Contestant) => {
             Contestant.PlayerNumber = x;
-            x++
+            x++;
+                if(Contestant[styleListed]){
+                    console.log("true")
+                    Tourney.Winners[styleListed].push(Contestant)
+                }
         })
-        Tourney.Prelims();
+            })
+        
 
     },
     Unseeded: () => {
-        Tourney.Winners = NameFiles.Participants.sort(function (a, b) {
-            return 0.5 - Math.random()
-        }).slice(0);
+        
+        
+        
         let x = 0;
-        Tourney.Winners.forEach((Contestant) => {
+        console.log("Go!")
+            Options.FightingStyles.forEach((styleListed)=>{
+        NameFiles.Participants.sort(function (a, b) {
+            return 0.5 - Math.random()
+        }).slice(0)    
+        NameFiles.Participants.forEach((Contestant) => {
+                console.log(Contestant[styleListed])
+                console.log(styleListed)
+                console.log(Contestant)
             Contestant.PlayerNumber = x;
-            x++
+            x++;
+                if(Contestant[styleListed]){
+                    console.log("true")
+                    Tourney.Winners[styleListed].push(Contestant)
+                }
         })
+            })
 
-        Tourney.Prelims();
     },
     WLS: () => {
         let total = NameFiles.Participants.length
-        let stage = document.querySelector(".SeededTourney").querySelector('.BracketPlace');
+        let stage = document.querySelector(".SeededTourney").querySelector('.BracketPlace').querySelector(`#${Tourney.ActiveStyle.id}`);
         let additions;
         let x = 0;
-        Tourney.Winners.forEach((Contestant) => {
-            Contestant.PlayerNumber = x;
-            x++
-        })
         for (i = 0; i < total; i++) {
             additions = document.createElement('div');
             additions.textContent = i + 1;
@@ -70,8 +101,8 @@ let Tourney = {
         }
     },
     //////////// Participants
-    Winners: [],
-    Eliminated: [],
+    Winners: {},
+    Eliminated:  {},
     /////////// WLS
     IronManPoint: (ev) => {
         console.log(ev.target.id)
@@ -113,7 +144,7 @@ let Tourney = {
     },
     TotalUpPoints: () => {
         console.log("PointTally")
-        let winners = Tourney.Winners.length
+        let winners = Tourney.Winners[Tourney.ActiveStyle.id].length
         let NewGuy = {
             name: "Starter",
             orders: 0,
@@ -131,17 +162,17 @@ let Tourney = {
             }
         }
         Tourney.Point[hit] = 0;
-        Tourney.Winners.push(NewGuy);
-        if (Tourney.Winners.length < 8) {
+        Tourney.Winners[Tourney.ActiveStyle.id].push(NewGuy);
+        if (Tourney.Winners[Tourney.ActiveStyle.id].length < 8) {
             Tourney.TotalUpPoints();
         } else {
             console.log('RoundNow')
-            document.querySelector('.BracketPlace').innerHTML = "";
-            NameFiles.SortByOrders(Tourney.Winners);
-            TourneyGetContestants(Tourney.Winners);
+            document.querySelector('.BracketPlace').querySelector(`#${Tourney.ActiveStyle.id}`).innerHTML = "";
+            NameFiles.SortByOrders(Tourney.Winners[Tourney.ActiveStyle.id]);
+            TourneyGetContestants(Tourney.Winners[Tourney.ActiveStyle.id]);
             document.querySelector(".WLSBanner").classList.add("hidden");
             document.querySelector(".FightBanner").classList.remove("hidden");
-            Tourney.Winners = [];
+            Tourney.Winners[Tourney.ActiveStyle.id] = [];
         }
     },
     /////////// Generic generator:
@@ -155,12 +186,12 @@ let Tourney = {
         do {
                 Morphed.push([PeopleArray.pop(), PeopleArray.shift()])
         } while (PeopleArray.length > 0)
-        Tourney.PostBrackets(Morphed, document.querySelector(".BracketPlace"))
-        } else if (Tourney.Eliminated.length == 1){
+        Tourney.PostBrackets(Morphed, document.querySelector(".BracketPlace").querySelector(`#${Tourney.ActiveStyle.id}`))
+        } else if (Tourney.Eliminated[Tourney.ActiveStyle.id].length == 1){
             Tourney.LoseBracket = true;
-            Tourney.GetContestants([Tourney.Winners[0], Tourney.Eliminated[0]]);
-            Tourney.Winners = [];
-            Tourney.Eliminated = [];
+            Tourney.GetContestants([Tourney.Winners[Tourney.ActiveStyle.id][0], Tourney.Eliminated[Tourney.ActiveStyle.id][0]]);
+            Tourney.Winners[Tourney.ActiveStyle.id] = [];
+            Tourney.Eliminated[Tourney.ActiveStyle.id] = [];
         } else {Tourney.DisplayResults()}
     },
     PostBrackets: (BracketArray, ParentElement) => {
@@ -186,7 +217,7 @@ let Tourney = {
         }
     },
     DisplayResults: () => {
-        let stage = document.querySelector(".BracketPlace")
+        let stage = document.querySelector(".BracketPlace").querySelector(`#${Tourney.ActiveStyle.id}`)
 
         NameFiles.Participants = NameFiles.Participants.sort((a, b) => {
             return b.current - a.current
@@ -198,7 +229,10 @@ let Tourney = {
     },
     ////////////////// Prelims
     Prelims: () => {
-        let participants = Tourney.Winners.slice(0);
+        console.log(Tourney.Winners)
+        console.log(Tourney.Winners[Tourney.ActiveStyle.id])
+        console.log(Tourney.ActiveStyle.id)
+        let participants = Tourney.Winners[Tourney.ActiveStyle.id].slice(0);
         let bracketPeople = 1;
         for (let x = 1; x <= participants.length; x = (x * 2)) {
             bracketPeople = x;
@@ -218,11 +252,11 @@ let Tourney = {
         if (prelims.length > 0) {
             Tourney.Prelim = true;
             Tourney.GetContestants(prelims);
-            Tourney.Winners = participants;
+            Tourney.Winners[Tourney.ActiveStyle.id] = participants;
 
         } else {
-            Tourney.GetContestants(Tourney.Winners);
-            Tourney.Winners = [];
+            Tourney.GetContestants(Tourney.Winners[Tourney.ActiveStyle.id]);
+            Tourney.Winners[Tourney.ActiveStyle.id] = [];
         }
     },
     ///////////////// FightField
@@ -249,12 +283,12 @@ let Tourney = {
             }
 
             if (!Tourney.LoseBracket) {
-                Tourney.Winners.push(p1)
+                Tourney.Winners[Tourney.ActiveStyle.id].push(p1)
                 p0.current = 0;
                 if (Tourney.Prelim) {
                     Tourney.PrelimElim.push(p0)
                 } else {
-                    Tourney.Eliminated.push(p0)
+                    Tourney.Eliminated[Tourney.ActiveStyle.id].push(p0)
                 }
 
             } else {
@@ -270,12 +304,12 @@ let Tourney = {
             }
 
             if (!Tourney.LoseBracket) {
-                Tourney.Winners.push(p0);
+                Tourney.Winners[Tourney.ActiveStyle.id].push(p0);
                 p1.current = 0;
                 if (Tourney.Prelim) {
                     Tourney.PrelimElim.push(p1)
                 } else {
-                    Tourney.Eliminated.push(p1);
+                    Tourney.Eliminated[Tourney.ActiveStyle.id].push(p1);
                 }
 
             } else {
@@ -287,7 +321,7 @@ let Tourney = {
     },
     NextRound: (ev) => {
         
-        let stage = document.querySelector(".BracketPlace");
+        let stage = document.querySelector(".BracketPlace").querySelector(`#${Tourney.ActiveStyle.id}`);
         if (stage.firstChild) {} else {
             
             
@@ -311,29 +345,41 @@ if(Tourney.DoubleElim){
                 alert("Prelim")
                 let Bracket = [];
                 Tourney.PrelimElim.forEach((person) => {
-                    Bracket.push([person, Tourney.Eliminated[Math.floor((Math.random() * Tourney.Eliminated.length))]])
+                    Bracket.push([person, Tourney.Eliminated[Tourney.ActiveStyle.id][Math.floor((Math.random() * Tourney.Eliminated[Tourney.ActiveStyle.id].length))]])
                 });
 
                 Tourney.GetContestants(Bracket);
                 Tourney.PrelimElim = []
             } else{
                     if (Tourney.LoseBracket) {
-                        Tourney.GetContestants(Tourney.Winners);
-                        Tourney.Winners = [];
+                        Tourney.GetContestants(Tourney.Winners[Tourney.ActiveStyle.id]);
+                        Tourney.Winners[Tourney.ActiveStyle.id] = [];
                     } else {
-                        Tourney.GetContestants(Tourney.Eliminated);
-                        Tourney.Eliminated = [];
+                        Tourney.GetContestants(Tourney.Eliminated[Tourney.ActiveStyle.id]);
+                        Tourney.Eliminated[Tourney.ActiveStyle.id] = [];
                     }
                 }
             
         
     },
     NextRoundSingle: (ev) =>{
-        if (Tourney.Winners.length > 1) {
-            Tourney.GetContestants(Tourney.Winners)
-            Tourney.Winners = [];
+        if (Tourney.Winners[Tourney.ActiveStyle.id].length > 1) {
+            Tourney.GetContestants(Tourney.Winners[Tourney.ActiveStyle.id])
+            Tourney.Winners[Tourney.ActiveStyle.id] = [];
         } else {
             Tourney.DisplayResults()
+        }
+    },
+    ChangeTab: (ev)=>{
+       Tourney.ActiveStyle? Tourney.ActiveStyle.classList.remove("active") : console.log("none");
+        Tourney.ActiveStyle = ev.target
+        ev.target.classList.add("active")
+        document.querySelector(".BracketPlace").childNodes.forEach((cNode)=>{cNode.className = "hidden";}) 
+        let newZone = document.querySelector(".BracketPlace").querySelector(`#${ev.target.id}`)
+        newZone.classList.remove("hidden");
+        if(!newZone.firstChild){
+            
+        Tourney.Prelims();
         }
     }
 

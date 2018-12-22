@@ -50,6 +50,7 @@
     background: rgb(66, 134, 244);
     border-bottom: outset blue 2px;
     min-height: 2.5rem;
+    height: 10%;
     padding: 0.5rem;
     color: white;
     text-align: center;
@@ -81,6 +82,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+    height: 10%;
     width: 100%;
     border-top: blue outset 2px;
 }
@@ -134,3 +136,20 @@ color : white;
 background : blue;
 border-radius : 30px;
 border: outset lightblue 2px;}
+/*////////////////// Tourney*/
+.TourneyStyleTabs{
+    position: absolute;
+    right: 0;
+    top: 2.5rem;
+    bottom: 10%;
+    display: block;
+    border-left: outset blue 2px;
+}
+.TourneyStyleTabs > button{
+    display: block;
+    border-bottom: outset blue 2px;
+    height: 3rem;
+}
+.TourneyStyleTabs > button.active{
+    background: lightblue;
+}

@@ -4,13 +4,15 @@ let Options = {
         document.querySelector("#TwilightZone").addEventListener("click", Options.KingdomOption);
         document.querySelector("#ParkInput").addEventListener("keyup", Options.KingdomFilter);
         document.querySelector(".typeShift").addEventListener("click", Options.EliminationStyle);
+        document.querySelector(".AddStyle").addEventListener("click", Options.FightingStylesAdd)
         
         if(localStorage.getItem("Options")){
-            console.log(localStorage.getItem("Options"))
-            NameFiles.Home = localStorage.getItem("Options").homeKingdom;
-            Tourney.DoubleElim = localStorage.getItem("Options").DoubleElim;
-            if(localStorage.getItem("Options").DoubleElim){
-               
+            let data = JSON.parse(localStorage.getItem("Options"))
+            Options.FightingStyles = data.styles
+            Options.StyleList(data.styles);
+            NameFiles.Home = data.homeKingdom;
+            Tourney.DoubleElim = data.DoubleElim;
+            if(data.DoubleElim){
             document.querySelector(".typeShift").textContent = "Sngl-Elim";
             Tourney.DoubleElim = true;
             Options.Options.DoubleElim = true;
@@ -99,8 +101,36 @@ let Options = {
         }
         Options.SaveOptions()
     },
+    FightingStyles: [],
+    FightingStylesAdd: ()=>{
+    let newStyle = document.querySelector(".TourneyStyleInput")
+    Options.FightingStyles.push(newStyle.value);
+    newStyle.value = ""; 
+        Options.StyleList(Options.FightingStyles)
+   
+    Options.Options.styles = Options.FightingStyles;
+        Options.SaveOptions()
+},
+    StyleList: (list)=>{ 
+    let stage = document.querySelector(".TourneyStyles")
+    stage.innerHTML = "";
+    let x = 0;
+    list.forEach((style)=>{
+        let additions = document.createElement("li");
+        additions.textContent = style;
+        additions.id = x;
+        additions.addEventListener("click", Options.RemoveTarget)
+        x ++
+        stage.appendChild(additions)
+    })
+    },
     
-    FightingStyles: (ev)=>{
-    
-}
+    RemoveTarget: (ev)=>{
+        if(confirm(`Delete ${ev.target.textContent}?`)){
+            Options.FightingStyles.splice(ev.target.id, 1);
+    Options.Options.styles = Options.FightingStyles;
+        Options.SaveOptions();
+            Options.StyleList(Options.FightingStyles)
+        }
+    }
 }
