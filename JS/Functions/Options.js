@@ -3,8 +3,11 @@ let Options = {
         
         document.querySelector("#TwilightZone").addEventListener("click", Options.KingdomOption);
         document.querySelector("#ParkInput").addEventListener("keyup", Options.KingdomFilter);
+        document.querySelector('#ParkInput').addEventListener("click", 
+        NameFiles.nullClick)
         document.querySelector(".typeShift").addEventListener("click", Options.EliminationStyle);
         document.querySelector(".AddStyle").addEventListener("click", Options.FightingStylesAdd)
+        document.querySelector(".TwilightZone").addEventListener("click", Options.TwilightClose)
         
         if(localStorage.getItem("Options")){
             let data = JSON.parse(localStorage.getItem("Options"))
@@ -62,6 +65,10 @@ let Options = {
     
         }
 }, 
+    TwilightClose: ()=>{
+        MasterCode.CurrentPage = document.querySelector(".Options");
+        MasterCode.PageShift();  
+    },
     KingdomSelect: (ev)=>{
     NameFiles.People = []
     console.log(ev.target.id)
@@ -69,8 +76,6 @@ let Options = {
     Options.Options.homeKingdom = ev.target.id;
         NameFiles.ParkListings(ev.target.id);
     console.log(ev.target.id);
-        MasterCode.CurrentPage = document.querySelector(".Options");
-        MasterCode.PageShift();   
         Options.SaveOptions()
 },
     KingdomRoster: [],
@@ -78,10 +83,9 @@ let Options = {
             Options.KingdomRoster.forEach((name) => {
                 console.log(name.textContent.toLocaleLowerCase())
                 console.log(ev.target.value.toLocaleLowerCase())
-                if ((name.textContent.toLocaleLowerCase()).includes(ev.target.value.toLocaleLowerCase()) && name.classList.contains("hidden")) {
-                    name.classList.remove("hidden")
-                } else if (!(name.id.toLocaleLowerCase()).includes(ev.target.value.toLocaleLowerCase())) {
                     name.classList.add("hidden")
+                if ((name.textContent.toLocaleLowerCase()).includes(ev.target.value.toLocaleLowerCase())) {
+                    name.classList.remove("hidden")
                 }
             })
     },
