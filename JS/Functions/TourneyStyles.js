@@ -198,7 +198,7 @@ additions);
             Tourney.GetContestants([Tourney.Winners[Tourney.ActiveStyle.id][0], Tourney.Eliminated[Tourney.ActiveStyle.id][0]]);
             Tourney.Winners[Tourney.ActiveStyle.id] = [];
             Tourney.Eliminated[Tourney.ActiveStyle.id] = [];
-        } else if (Tourney.Eliminated[Tourney.ActiveStyle.id].length == 1 && Tourney.Winners[Tourney.ActiveStyle.id].length == 1){Tourney.NextRoundDouble()} else {Tourney.DisplayResults()}
+        } else if (Tourney.Eliminated[Tourney.ActiveStyle.id].length > 1 || Tourney.Winners[Tourney.ActiveStyle.id].length > 1){Tourney.NextRoundDouble()} else {Tourney.DisplayResults()}
     },
     PostBrackets: (BracketArray, ParentElement) => {
         if (BracketArray.length != 0) {
